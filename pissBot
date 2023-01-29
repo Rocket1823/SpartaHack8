@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main() {
+	int x = 0;
+	while (x == 0) {
+		cout << "How many are there...?  ";
+		string goHere = "Your best pick(s): ";
+		int choice;
+		bool backrooms = false;
+		cin >> choice;
+		if (choice < 0) {
+			choice = 0;
+
+		}
+		else if (choice > 10) {
+			choice = 10;
+		}
+		cout << endl;
+
+		vector<int> urnials;
+		for (int i = 0; i < choice; i++) {
+			urnials.push_back(i);
+			urnials[i] = 0;
+		}
+
+		cout << "Where are there people alreay? (index 0), enter none if none: ";
+		string pick;
+		cin >> pick;
+		cout << endl;
+
+		if (pick == "none") {
+			cout << "Go anywhere then";
+		}
+		else {
+			for (int i = 0; i < pick.size(); i++) {
+				urnials[pick[i] - '0'] = 1;
+			}
+
+			for (int i = 1; i < choice - 2; i++) {
+				if (urnials[i] == 1 && urnials[i + 1] == 1) {
+					if ((urnials[i + 2] != 1)) {
+						urnials[i + 2] = 2;
+					}
+					if ((urnials[i - 1] != 1)) {
+						urnials[i - 1] = 2;
+					}
+				}
+			}
+
+			if (urnials[0] == 1) {
+				if (urnials[1] != 1) {
+					urnials[1] = 2;
+				}
+			}
+			for (int i = 1; i < choice - 1; i++) {
+				if (urnials[i] == 1) {
+					if ((urnials[i - 1] != 1)) {
+						urnials[i - 1] = 2;
+					}
+					if ((urnials[i + 1] != 1)) {
+						urnials[i + 1] = 2;
+					}
+				}
+			}
+
+
+
+			cout << goHere;
+			for (int i = 0; i < choice; i++) {
+				if (urnials[i] == 0) {
+					cout << "|" << "*";
+				}
+				else if (urnials[i] == 1) {
+					cout << "|" << "o";
+				}
+				else {
+					cout << "|" << " ";
+				}
+			}
+			cout << "|" << endl;
+			cout << "Go to starred spots" << endl << endl << endl << endl << endl;
+		}
+
+	}
+}
+
